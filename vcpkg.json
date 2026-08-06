@@ -1,10 +1,12 @@
 {
-  "name": "modern-cpp-template",
+  "name": "kiln",
   "version": "1.0.0",
   "dependencies": [
     "fmt",
     "cxxopts",
     "cgltf",
-    "simdjson"
+    "simdjson",
+    "cli11",
+    "nlohmann-json"
   ]
 }

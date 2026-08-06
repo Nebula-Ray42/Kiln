@@ -1,9 +1,9 @@
-add_executable(baker_tests
+add_executable(kiln_tests
         baker_test.cpp
 )
 
-target_link_libraries(baker_tests PRIVATE
+target_link_libraries(kiln_tests PRIVATE
         baker_core
 )
 
-add_test(NAME BakerCoreTest COMMAND baker_tests)
+add_test(NAME KilnCoreTest COMMAND kiln_tests)

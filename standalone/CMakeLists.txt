@@ -1,7 +1,7 @@
-add_executable(asset_baker
-        main.cpp
+add_executable(kiln_main
+        src/main.cpp
 )
 
-target_link_libraries(asset_baker PRIVATE
+target_link_libraries(kiln_main PRIVATE
         baker_core
 )
