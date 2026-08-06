@@ -1,0 +1,10 @@
+{
+  "name": "modern-cpp-template",
+  "version": "1.0.0",
+  "dependencies": [
+    "fmt",
+    "cxxopts",
+    "cgltf",
+    "simdjson"
+  ]
+}

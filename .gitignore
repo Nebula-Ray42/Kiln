@@ -1,0 +1,11 @@
+# IDE integrations
+/.idea/
+/.vs/
+/.vscode/
+/.zed/
+
+# Build files
+/build/
+/cmake-build-*/
+/out/
+/gltf/library.wasm
