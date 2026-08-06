@@ -2,14 +2,15 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "dev",
+      "name": "kiln",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/cmake-build-debug",
       "cacheVariables": {
         "CMAKE_CXX_STANDARD": "23",
         "CMAKE_CXX_STANDARD_REQUIRED": "ON",
         "CMAKE_CXX_EXTENSIONS": "OFF",
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "CMAKE_TOOLCHAIN_FILE": "/Users/sakakibarayuto/vcpkg/scripts/buildsystems/vcpkg.cmake"
       }
     }
   ]

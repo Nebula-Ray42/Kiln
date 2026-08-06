@@ -1,0 +1,14 @@
+namespace kiln.schema;
+
+struct Vertex {
+  px: float; py: float; pz: float; // Position
+  nx: float; ny: float; nz: float; // Normal
+  u: float;  v: float;             // UV
+}
+
+table Mesh {
+  vertices: [Vertex];
+  indices: [uint32];
+}
+
+root_type Mesh;

@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "dependencies": [
     "fmt",
-    "cxxopts",
     "cgltf",
-    "simdjson",
     "cli11",
-    "nlohmann-json"
+    "flatbuffers"
   ]
 }
