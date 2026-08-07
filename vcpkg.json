@@ -5,6 +5,7 @@
     "fmt",
     "cgltf",
     "cli11",
-    "flatbuffers"
+    "flatbuffers",
+    "nlohmann-json"
   ]
 }

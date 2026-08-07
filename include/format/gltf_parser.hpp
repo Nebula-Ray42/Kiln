@@ -5,6 +5,7 @@
 #include <filesystem>
 
 namespace kiln::format {
-[[nodiscard]] auto parse_gltf(const std::filesystem::path& file_path)
-    -> std::expected<mesh::Mesh, std::string>;
-}
+
+
+[[nodiscard]] std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view filepath) noexcept;
+}  // namespace kiln::format
