@@ -38,7 +38,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: メッシュの中に 'primitives' (頂点構造) が見つかりません");
   }
 
-  [[maybe_unused]] const auto& primitive = first_mesh["primitives"][0];
+  const auto& primitive = first_mesh["primitives"][0];
 
   if (!primitive.contains("attributes")) {
     return std::unexpected("エラー: glTFファイル内に 'attributes'が見つかりません");
@@ -50,7 +50,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: 'attributes'の中に 'POSITION'が見つかりません");
   }
 
-  const int position_accessor_index = attributes["POSITION"];
+  [[maybe_unused]] const int position_accessor_index = attributes["POSITION"];
 
   return mesh_data;
 }
