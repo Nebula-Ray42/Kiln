@@ -72,7 +72,24 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: accessors 配列の要素数（サイズ）が、position_accessor_index より大きいです");
   }
 
-  [[maybe_unused]] const auto& position_accessor = accessors[position_accessor_index];
+  const auto& position_accessor = accessors[position_accessor_index];
+
+  if (!position_accessor.contains("componentType")) {
+    return std::unexpected("エラー: 'componentType'が存在しません");
+  }
+
+  const uint32_t component_type = position_accessor["componentType"];
+
+  if (!position_accessor.contains("type")) {
+    return std::unexpected("エラー: 'type'が存在しません");
+  }
+
+  const std::string accessor_type = position_accessor["type"];
+  constexpr uint32_t GLTF_FLOAT = 5126;
+
+  if (component_type != GLTF_FLOAT || accessor_type != "VEC3") {
+    return std::unexpected("エラー: POSITIONデータはFLOAT型のVEC3である必要があります");
+  }
 
   [[maybe_unused]] size_t size1 = get_component_size<float>();
 
