@@ -29,7 +29,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   }
 
   if (!gltf_json["meshes"].is_array() || gltf_json["meshes"].empty()) {
-    return std::unexpected("エラー: 'meshes' が空っぽ、または正しい配列形式ではありません");
+    return std::unexpected("エラー: 'meshes' が存在しない、または正しい配列形式ではありません");
   }
 
   const auto& first_mesh = gltf_json["meshes"][0];
@@ -50,7 +50,19 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: 'attributes'の中に 'POSITION'が見つかりません");
   }
 
-  [[maybe_unused]] const int position_accessor_index = attributes["POSITION"];
+  const size_t position_accessor_index = attributes["POSITION"];
+
+  if (!gltf_json.contains("accessors") || !gltf_json["accessors"].is_array()) {
+    return std::unexpected("エラー: 'accessors' が存在しない、または正しい配列形式ではありません");
+  }
+
+  const auto& accessors = gltf_json["accessors"];
+
+  if (position_accessor_index >= accessors.size()) {
+    return std::unexpected("エラー: accessors 配列の要素数（サイズ）が、position_accessor_index より大きいです");
+  }
+
+  [[maybe_unused]] const auto& position_accessor = accessors[position_accessor_index];
 
   return mesh_data;
 }

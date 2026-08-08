@@ -6,14 +6,26 @@ int main() {
   const std::string test_filepath = "dummy_mesh.gltf";
   std::ofstream out_file(test_filepath);
   out_file << R"({
-        "meshes": [
-            {
-                "primitives": [
-                    { "attributes": { "POSITION": 0 } }
-                ]
-            }
-        ]
-    })";
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          }
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC3"
+    }
+  ]
+})";
   out_file.close();
 
   std::cout << "--- パース開始 ---\n";
