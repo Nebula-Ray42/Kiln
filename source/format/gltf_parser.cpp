@@ -3,8 +3,18 @@
 #include <expected>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <concepts>
 
 namespace kiln::format {
+
+template <typename T>
+concept GltfComponent = std::same_as<T, float> || std::same_as<T, uint16_t> || std::same_as<T, uint32_t> || std::same_as<T, uint8_t>;
+
+template <typename T>
+requires GltfComponent<T>
+size_t get_component_size() {
+  return sizeof(T);
+}
 
 std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view filepath) noexcept {
 
@@ -63,6 +73,8 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   }
 
   [[maybe_unused]] const auto& position_accessor = accessors[position_accessor_index];
+
+  [[maybe_unused]] size_t size1 = get_component_size<float>();
 
   return mesh_data;
 }
