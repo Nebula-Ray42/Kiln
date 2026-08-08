@@ -85,9 +85,9 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   }
 
   const std::string accessor_type = position_accessor["type"];
-  constexpr uint32_t GLTF_FLOAT = 5126;
 
-  if (component_type != GLTF_FLOAT || accessor_type != "VEC3") {
+  if (constexpr uint32_t GLTF_FLOAT = 5126;
+      component_type != GLTF_FLOAT || accessor_type != "VEC3") {
     return std::unexpected("エラー: POSITIONデータはFLOAT型のVEC3である必要があります");
   }
 
