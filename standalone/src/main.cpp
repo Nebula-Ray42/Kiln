@@ -24,6 +24,13 @@ int main() {
       "count": 3,
       "type": "VEC3"
     }
+  ],
+   "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 36,
+      "byteOffset": 0
+    }
   ]
 })";
   out_file.close();
