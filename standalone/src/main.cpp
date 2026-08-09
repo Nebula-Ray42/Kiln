@@ -31,6 +31,12 @@ int main() {
       "byteLength": 36,
       "byteOffset": 0
     }
+  ],
+  "buffers": [
+    {
+      "byteLength": 36,
+      "uri": "dummy.bin"
+    }
   ]
 })";
   out_file.close();

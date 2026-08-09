@@ -35,7 +35,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   kiln::mesh::MeshData mesh_data;
 
   if (!gltf_json.contains("meshes")) {
-    return std::unexpected("エラー: glTFファイル内に 'meshes' (メッシュデータ) が見つかりません");
+    return std::unexpected("エラー: glTFファイル内に 'meshes' が見つかりません");
   }
 
   if (!gltf_json["meshes"].is_array() || gltf_json["meshes"].empty()) { // NOLINT: Existence checked by contains() above
@@ -45,7 +45,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   const auto& first_mesh = gltf_json["meshes"][0]; // NOLINT: Bounds checked by empty() above
 
   if (!first_mesh.contains("primitives") || !first_mesh["primitives"].is_array()) { // NOLINT: Existence checked by contains()
-    return std::unexpected("エラー: メッシュの中に 'primitives' (頂点構造) が見つかりません");
+    return std::unexpected("エラー: メッシュの中に 'primitives' が見つかりません");
   }
 
   const auto& primitive = first_mesh["primitives"][0]; // NOLINT: Existence of array verified above
@@ -69,7 +69,7 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   const auto& accessors = gltf_json["accessors"]; // NOLINT: Existence checked by contains() above
 
   if (position_accessor_index >= accessors.size()) {
-    return std::unexpected("エラー: accessors 配列の要素数（サイズ）が、position_accessor_index より大きいか同等です");
+    return std::unexpected("エラー: accessors 配列の要素数が、position_accessor_index より大きいか同等です");
   }
 
   const auto& position_accessor = accessors[position_accessor_index]; // NOLINT: Bounds strictly checked against size() above
@@ -107,7 +107,29 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: buffer_view_index が bufferViews 配列の範囲外です");
   }
 
-  [[maybe_unused]] const auto& buffer_view = buffer_views_array[buffer_view_index]; // NOLINT: Bounds strictly checked against size() above
+  const auto& buffer_view = buffer_views_array[buffer_view_index]; // NOLINT: Bounds strictly checked against size() above
+
+  if (!buffer_view.contains("buffer")) {
+    return std::unexpected("エラー: 'buffer' が存在しません");
+  }
+
+  const size_t buffer_index = buffer_view["buffer"];
+
+  if (!gltf_json.contains("buffers")) {
+    return std::unexpected("エラー: 'buffers' が存在しません");
+  }
+
+  const auto& buffers_array = gltf_json["buffers"]; // NOLINT
+
+  if (!buffers_array.is_array()) {
+    return std::unexpected("エラー: 'buffers' が正しい配列形式ではありません");
+  }
+
+  if (buffer_index >= buffers_array.size()) {
+    return std::unexpected("エラー: buffer 配列の要素数が、buffer_index より大きいか同等です");
+  }
+
+  [[maybe_unused]] const auto& buffer = buffers_array[buffer_index];
 
   [[maybe_unused]] size_t size1 = get_component_size<float>();
 
