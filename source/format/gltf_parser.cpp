@@ -19,7 +19,6 @@ size_t get_component_size() {
   return sizeof(T);
 }
 
-// --- 無名名前空間（このファイル内だけのプライベートなヘルパー関数群） ---
 namespace {
 
 // 1. POSITION の Accessor ID を抽出する関数
@@ -91,7 +90,6 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: JSONの形式が不正です -> " + std::string(e.what()));
   }
 
-  // --- パイプライン処理（FDMスタイル） ---
 
   // 1. Accessor ID の取得
   auto accessor_idx_res = get_position_accessor_index(gltf_json);
