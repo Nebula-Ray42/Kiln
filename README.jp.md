@@ -64,4 +64,4 @@ cmake --build cmake-build-debug --target kiln_main -j 6
 
 ## ライセンス
 
-[Apache License](LICENSE)
+[BSD-2-Clause Plus Patent License](LICENSE)
