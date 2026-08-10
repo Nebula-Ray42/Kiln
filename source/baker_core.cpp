@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Nebula-Ray42.
+// SPDX-License-Identifier: BSD-2-Clause-Patent
 
 namespace baker {
     void dummy_function() {}
