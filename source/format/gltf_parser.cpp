@@ -1,10 +1,11 @@
 #include "format/gltf_parser.hpp"
+#include "core/file_io.hpp"
 #include <string>
 #include <expected>
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <concepts>
-#include <cstdint>
+#include <iostream>
 
 namespace kiln::format {
 
@@ -111,6 +112,25 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
   if (*buffer_idx_res >= buffers.size()) { return std::unexpected("エラー: buffer 配列の範囲外です"); }
 
   [[maybe_unused]] const auto& buffer = buffers[*buffer_idx_res]; // NOLINT
+
+  if (!buffer.contains("uri") || !buffer.contains("byteLength")) {
+    return std::unexpected("エラー: buffer に 'uri' または 'byteLength' が存在しません");
+  }
+
+  const std::string uri = buffer["uri"]; // NOLINT
+  const size_t byte_length = buffer["byteLength"]; // NOLINT
+
+  auto binary_result = kiln::core::read_binary_file(uri);
+  if (!binary_result) {
+    return std::unexpected(binary_result.error());
+  }
+
+  std::vector<std::byte> binary_data = std::move(binary_result.value());
+
+  if (binary_data.size() < byte_length) {
+    return std::unexpected("エラー: バイナリファイルのサイズがJSONの 'byteLength' 指定より小さいです");
+  }
+
   [[maybe_unused]] size_t float_size = get_component_size<float>();
 
   kiln::mesh::MeshData mesh_data;

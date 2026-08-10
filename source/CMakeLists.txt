@@ -7,6 +7,8 @@ add_library(kiln_core STATIC
         mesh/mesh_processor.cpp
         ../include/mesh/mesh_processor.hpp
         format/gltf_parser.cpp
+        ../include/core/file_io.hpp
+        core/file_io.cpp
 )
 
 
