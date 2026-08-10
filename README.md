@@ -6,7 +6,7 @@ English | [日本語](README.jp.md)
 
 ---
 
-## ⚠️ Work in Progress & Disclaimer
+## **Work in Progress & Disclaimer**
 
 **Current Status: Experimental / Active Development**
 This project is currently in the early stages of development. The architecture, APIs, and feature sets are highly volatile and subject to breaking changes without notice. It is **not** yet ready for production use.
