@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Nebula-Ray42.
+// SPDX-License-Identifier: BSD-2-Clause-Patent
+
 #include "format/gltf_parser.hpp"
 #include "core/file_io.hpp"
 #include <string>
