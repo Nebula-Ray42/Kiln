@@ -173,6 +173,20 @@ std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view fil
     return std::unexpected("エラー: バイナリファイルのサイズがJSONの 'byteLength' 指定より小さいです");
   }
 
+    const auto& buffer_view = gltf_json["bufferViews"][ *buffer_view_idx_res ]; // NOLINT
+    const size_t byte_offset = buffer_view.contains("byteOffset") ? buffer_view["byteOffset"].get<size_t>() : 0;
+
+    std::span<const std::byte> full_buffer_view = binary_data;
+
+    const bool span_in_range = (byte_offset + byte_length) <= full_buffer_view.size();
+    if (!span_in_range) {
+        return std::unexpected("エラー: bufferView の範囲がバイナリファイルのサイズを超過しています");
+    }
+
+    std::span<const std::byte> position_data_span = full_buffer_view.subspan(byte_offset, byte_length);
+
+    std::cout << "[SUCCESS] POSITIONデータを抽出しました！ サイズ: " << position_data_span.size() << " bytes\n";
+
   [[maybe_unused]] size_t float_size = get_component_size<float>();
 
   kiln::mesh::MeshData mesh_data;
