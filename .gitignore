@@ -3,9 +3,15 @@
 /.vs/
 /.vscode/
 /.zed/
+*.swp
+*.swo
 
 # Build files
 /build/
 /cmake-build-*/
 /out/
 /gltf/library.wasm
+/bin/
+
+# os
+.DS_Store
