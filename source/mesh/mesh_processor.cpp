@@ -1,4 +1,3 @@
-// source/mesh/mesh_processor.cpp
 //------------------------------------------------//
 // Copyright (c) 2026 Nebula-Ray42.               //
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //

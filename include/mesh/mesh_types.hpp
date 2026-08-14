@@ -56,4 +56,4 @@ struct MeshData {
     }
 };
 
-}  // namespace kiln::meshln::mesh
+}  // namespace kiln::mesh
