@@ -10,7 +10,5 @@
 #include <filesystem>
 
 namespace kiln::format {
-
-
-[[nodiscard]] std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view filepath) noexcept;
+std::expected<kiln::mesh::MeshData, std::string> parse_gltf(std::string_view filepath) noexcept;
 }  // namespace kiln::format

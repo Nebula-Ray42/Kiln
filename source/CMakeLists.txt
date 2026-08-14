@@ -1,5 +1,6 @@
 find_package(nlohmann_json CONFIG REQUIRED)
 
+
 add_library(kiln_core STATIC
         baker_core.cpp
         ../include/mesh/mesh_types.hpp
@@ -9,6 +10,8 @@ add_library(kiln_core STATIC
         format/gltf_parser.cpp
         ../include/core/file_io.hpp
         core/file_io.cpp
+        format/gltf_helper.cpp
+        ../include/format/gltf_helper.hpp
 )
 
 
