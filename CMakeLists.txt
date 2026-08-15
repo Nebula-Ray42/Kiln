@@ -5,6 +5,27 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+
+
+if(WIN32)
+    add_compile_definitions(NOMINMAX WIN32_LEAN_AND_MEAN)
+
+    if(MSVC)
+        add_compile_options(
+                /utf-8
+                /Zc:__cplusplus
+                /permissive-
+        )
+    endif()
+elseif(APPLE)
+
+elseif(UNIX AND NOT APPLE)
+
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(CompilerWarnings)
 
