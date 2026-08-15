@@ -5,10 +5,21 @@ function(set_project_warnings project_name)
         return()
     endif()
 
-    target_compile_options(${project_name} PRIVATE
-            -Wall
-            -Wextra
-            -Wpedantic
-            -Werror
-    )
+    if(MSVC)
+        target_compile_options(${project_name} PRIVATE
+                /W4
+                /WX
+                /w14242
+                /w14254
+                /w14265
+        )
+    else()
+        target_compile_options(${project_name} PRIVATE
+                -Wall
+                -Wextra
+                -Wpedantic
+                -Werror
+                -Wconversion
+        )
+    endif()
 endfunction()
