@@ -55,4 +55,51 @@ std::expected<std::optional<BufferMetadata>, std::string> extract_attribute_meta
   return meta;
 }
 
+std::expected<std::optional<BufferMetadata>, std::string> extract_index_metadata(
+    const nlohmann::json& gltf_json) noexcept {
+
+    const bool has_meshes = gltf_json.contains("meshes") and gltf_json["meshes"].is_array();
+    if (not has_meshes || gltf_json["meshes"].empty()) return std::unexpected("エラー: meshesが不正です");
+
+    const auto& first_mesh = gltf_json["meshes"][0];
+    const bool has_primitives = first_mesh.contains("primitives") and first_mesh["primitives"].is_array();
+    if (not has_primitives || first_mesh["primitives"].empty()) return std::unexpected("エラー: primitivesが不正です");
+
+    const auto& first_primitive = first_mesh["primitives"][0];
+
+    // インデックスはオプション（存在しない場合は頂点を順番に繋ぐ仕様）
+    if (not first_primitive.contains("indices")) {
+        return std::nullopt;
+    }
+
+    const size_t accessor_idx = first_primitive["indices"];
+
+    const auto& accessors = gltf_json["accessors"];
+    if (accessor_idx >= accessors.size()) return std::unexpected("エラー: indicesのインデックスが範囲外です");
+
+    const auto& accessor = accessors[accessor_idx];
+    if (accessor["type"] != "SCALAR") {
+        return std::unexpected("エラー: indicesの型がSCALARではありません");
+    }
+
+    const uint32_t comp_type = accessor["componentType"];
+    // 5121(Unsigned Byte), 5123(Unsigned Short), 5125(Unsigned Int)
+    if (comp_type != 5121 and comp_type != 5123 and comp_type != 5125) {
+        return std::unexpected("エラー: indicesのデータ型が未対応です");
+    }
+
+    const size_t buffer_view_idx = accessor["bufferView"];
+    const auto& buffer_view = gltf_json["bufferViews"][buffer_view_idx];
+    const size_t buffer_idx = buffer_view["buffer"];
+    const auto& buffer = gltf_json["buffers"][buffer_idx];
+
+    BufferMetadata meta;
+    meta.byte_offset = buffer_view.contains("byteOffset") ? buffer_view["byteOffset"].get<size_t>() : 0;
+    meta.byte_length = buffer["byteLength"];
+    meta.uri = buffer["uri"];
+    meta.component_type = comp_type;
+
+    return meta;
+}
+
 } // namespace kiln::format::detail

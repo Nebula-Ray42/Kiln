@@ -3,11 +3,6 @@
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //
 //------------------------------------------------//
 
-//------------------------------------------------//
-// Copyright (c) 2026 Nebula-Ray42.               //
-// SPDX-License-Identifier: BSD-2-Clause-Patent   //
-//------------------------------------------------//
-
 #include "format/gltf_parser.hpp"
 #include "format/gltf_helper.hpp"
 #include "core/file_io.hpp"
@@ -67,6 +62,27 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         uv_count = uv_meta.byte_length / sizeof(float);
     }
 
+    auto index_res = detail::extract_index_metadata(gltf_json);
+    if (not index_res.has_value()) return std::unexpected(index_res.error());
+
+    size_t index_offset = 0;
+    size_t index_count = 0;
+    uint32_t index_type = 0;
+    const auto& index_opt = index_res.value();
+
+    if (index_opt.has_value()) {
+        const auto& index_meta = index_opt.value();
+        index_offset = index_meta.byte_offset;
+        index_type = index_meta.component_type;
+
+        // 型に合わせて要素数を計算
+        size_t type_size = 2; // デフォルトは 5123 (uint16_t)
+        if (index_type == 5121) type_size = 1;
+        else if (index_type == 5125) type_size = 4;
+
+        index_count = index_meta.byte_length / type_size;
+    }
+
     // 3. バイナリのロード
     std::filesystem::path gltf_dir = std::filesystem::path(filepath).parent_path();
     std::filesystem::path bin_path = gltf_dir / pos_meta.uri;
@@ -86,7 +102,10 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         .normals_byte_offset = norm_offset,
         .normals_float_count = norm_count,
         .uvs_byte_offset = uv_offset,
-        .uvs_float_count = uv_count
+        .uvs_float_count = uv_count,
+        .indices_byte_offset = index_offset,
+        .indices_count = index_count,
+        .indices_component_type = index_type,
     };
 
     std::cout << "[SUCCESS] POSITIONの抽出に成功しました\n";

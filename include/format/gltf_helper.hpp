@@ -18,6 +18,7 @@ struct BufferMetadata {
     size_t byte_offset = 0;
     size_t byte_length = 0;
     std::string uri;
+    uint32_t component_type = 0;
 };
 
 std::expected<std::optional<BufferMetadata>, std::string> extract_attribute_metadata(
@@ -26,5 +27,8 @@ std::expected<std::optional<BufferMetadata>, std::string> extract_attribute_meta
     uint32_t expected_component_type,
     std::string_view expected_type
 ) noexcept;
+
+std::expected<std::optional<BufferMetadata>, std::string> extract_index_metadata(
+    const nlohmann::json& gltf_json) noexcept;
 
 } // namespace kiln::format::detail

@@ -10,10 +10,9 @@
 namespace kiln::mesh {
 
 struct MeshData {
-    // 1. 唯一のデータ所有者（巨大なバイナリ）
+
     std::vector<std::byte> raw_buffer;
 
-    // 2. メタデータ（どこに・何個あるか）
     size_t positions_byte_offset = 0;
     size_t positions_float_count = 0;
 
@@ -25,6 +24,7 @@ struct MeshData {
 
     size_t indices_byte_offset = 0;
     size_t indices_count = 0; // 今回は uint32_t 固定と仮定
+    uint32_t indices_component_type = 0;
 
     // 3. 必要な時だけゼロコピーで窓枠を作る（メソッド化）
     [[nodiscard]] std::span<const float> get_positions() const noexcept {
@@ -50,6 +50,22 @@ struct MeshData {
 
     [[nodiscard]] std::span<const uint32_t> get_indices() const noexcept {
         if (indices_count == 0) return {};
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        const auto* ptr = reinterpret_cast<const uint32_t*>(raw_buffer.data() + indices_byte_offset);
+        return {ptr, indices_count};
+    }
+
+    [[nodiscard]] std::span<const uint16_t> get_indices_u16() const noexcept {
+        // 5123 は glTF の UNSIGNED_SHORT
+        if (indices_count == 0 || indices_component_type != 5123) return {};
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
+        const auto* ptr = reinterpret_cast<const uint16_t*>(raw_buffer.data() + indices_byte_offset);
+        return {ptr, indices_count};
+    }
+
+    [[nodiscard]] std::span<const uint32_t> get_indices_u32() const noexcept {
+        // 5125 は glTF の UNSIGNED_INT
+        if (indices_count == 0 || indices_component_type != 5125) return {};
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
         const auto* ptr = reinterpret_cast<const uint32_t*>(raw_buffer.data() + indices_byte_offset);
         return {ptr, indices_count};
