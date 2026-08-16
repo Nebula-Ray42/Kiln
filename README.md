@@ -11,11 +11,6 @@ English | [日本語](README.jp.md)
 **Current Status: Experimental / Active Development**
 This project is currently in the early stages of development. The architecture, APIs, and feature sets are highly volatile and subject to breaking changes without notice. It is **not** yet ready for production use.
 
-**Legal Disclaimer**
-All code, designs, and technical content in this repository are provided for personal learning, research, and experimentation purposes only. They are provided "AS IS", without warranty of any kind, express or implied. 
-
-In no event shall the author be held liable for any claims, damages, or other liabilities. This includes, but is not limited to, any direct, indirect, incidental, special, **punitive damages**, or consequential damages (such as **commercial losses**, lost profits, data loss, or business interruption), whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the use or inability to use the code or materials provided.
-
 ---
 
 ## Overview
