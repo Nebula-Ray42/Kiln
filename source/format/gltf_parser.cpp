@@ -34,7 +34,6 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
     if (not pos_meta_opt.has_value()) return std::unexpected("エラー: 必須である POSITION が存在しません");
     const auto& pos_meta = pos_meta_opt.value();
 
-    // TODO: ここに NORMAL を抽出する処理を足す
     auto norm_res = detail::extract_attribute_metadata(gltf_json, "NORMAL", GLTF_FLOAT, "VEC3");
     if (not norm_res.has_value()) return std::unexpected(norm_res.error());
 
@@ -48,7 +47,6 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         norm_count = norm_meta.byte_length / sizeof(float);
     }
 
-    // TODO: ここに UV を抽出する処理を足す
     auto uv_res = detail::extract_attribute_metadata(gltf_json, "TEXCOORD_0", GLTF_FLOAT, "VEC2");
     if (not uv_res.has_value()) return std::unexpected(uv_res.error());
 
