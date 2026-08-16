@@ -1,0 +1,29 @@
+name: Kiln CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-macos:
+    name: Build on macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Build Tools
+        run: brew install ninja
+
+      - name: Setup vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git ~/vcpkg
+          ~/vcpkg/bootstrap-vcpkg.sh
+
+      - name: Run Build Script
+        run: |
+          chmod +x ./tool/build.sh
+          ./tool/build.sh
