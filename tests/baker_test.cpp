@@ -7,7 +7,6 @@
 #include <fstream>
 #include <vector>
 
-// 自動生成された設計図を読み込む
 #include "mesh_generated.h"
 
 int main() {
