@@ -15,11 +15,9 @@ int main() {
         return 1;
     }
 
-    // パース成功！MeshDataを受け取る
     const auto& mesh_data = result.value();
     std::cout << "\n=== MeshData 抽出レポート ===\n";
 
-    // 1. POSITION (3つのfloatで1頂点)
     auto positions = mesh_data.get_positions();
     std::cout << "頂点数: " << (positions.size() / 3) << " (合計 " << positions.size() << " floats)\n";
     if (positions.size() >= 3) {
@@ -28,7 +26,6 @@ int main() {
                   << ", Z: " << positions[2] << "\n";
     }
 
-    // 2. NORMAL (3つのfloatで1法線)
     auto normals = mesh_data.get_normals();
     std::cout << "法線数: " << (normals.size() / 3) << " (合計 " << normals.size() << " floats)\n";
     if (normals.size() >= 3) {
@@ -37,11 +34,9 @@ int main() {
                   << ", Z: " << normals[2] << "\n";
     }
 
-    // 3. UV (2つのfloatで1UV座標)
     auto uvs = mesh_data.get_uvs();
     std::cout << "UV数: " << (uvs.size() / 2) << " (合計 " << uvs.size() << " floats)\n";
 
-    // 4. INDICES (16ビットか32ビットか判定して出力)
     auto indices_16 = mesh_data.get_indices_u16();
     auto indices_32 = mesh_data.get_indices_u32();
 
