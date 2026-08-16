@@ -23,3 +23,6 @@ test_output.bin
 # Python Local Dependencies & Caches
 tool/libs/
 tool/__pycache__/
+
+# FlatBuffers Generated Files
+schema/generated/

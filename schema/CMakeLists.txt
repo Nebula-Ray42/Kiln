@@ -6,13 +6,15 @@ set(GENERATED_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 file(MAKE_DIRECTORY "${GENERATED_DIR}")
 
 add_custom_command(
-        OUTPUT "${GENERATED_DIR}/mesh_generated.h"
-        COMMAND flatbuffers::flatc -c -p -o "${GENERATED_DIR}" "${SCHEMA_FILE}"
-        DEPENDS "${SCHEMA_FILE}"
+        OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/generated/mesh_generated.h
+        COMMAND flatc --cpp --python -o ${CMAKE_CURRENT_SOURCE_DIR}/generated ${CMAKE_CURRENT_SOURCE_DIR}/mesh.fbs
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/mesh.fbs
         COMMENT "Compiling FlatBuffers schema: mesh.fbs (C++ and Python)"
 )
 
-add_custom_target(kiln_schema_gen ALL DEPENDS "${GENERATED_DIR}/mesh_generated.h")
+add_custom_target(kiln_schema_gen ALL
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/generated/mesh_generated.h
+)
 
 add_library(kiln_schema INTERFACE)
 target_include_directories(kiln_schema INTERFACE "${GENERATED_DIR}")
