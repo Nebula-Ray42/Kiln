@@ -48,21 +48,14 @@ Kiln is a high-performance backend system designed for 3D asset parsing and proc
 
 ## Build Instructions
 
-1. **Configure the project** using the provided CMake preset:
+1. **Build the project** (Automatically configures CMake, generates FlatBuffers schemas, and compiles the project):
 ```bash
-cmake --preset kiln
+./tool/build.sh
 ```
 
-2. **Build the executable:**
-
+2. **Run the application**
 ```bash
-cmake --build cmake-build-debug --target kiln_main -j 6
-```
-
-3. **Run the application:**
-
-```bash
-./cmake-build-debug/standalone/kiln_main
+./cmake-build-debug/bin/kiln_main
 ```
 
 ---

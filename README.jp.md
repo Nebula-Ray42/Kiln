@@ -45,21 +45,16 @@ Kilnは、glTFなどの3Dアセットをパース・処理するためのハイ�
 
 ## ビルド手順
 
-1. 提供されている CMake プリセットを使用して**プロジェクトを構成**します:
+1. **プロジェクトをビルドする**（CMakeの設定を自動で行い、FlatBuffersスキーマを生成し、プロジェクトをコンパイルします）：
 ```bash
-cmake --preset kiln
+./tool/build.sh
 ```
 
-
-2. **ビルドを実行**します:
+2. **アプリケーションを実行する**
 ```bash
-cmake --build cmake-build-debug --target kiln_main -j 6
+./cmake-build-debug/bin/kiln_main
 ```
 
-3. **アプリケーションを実行**します:
-```bash
-./cmake-build-debug/standalone/kiln_main
-```
 ---
 
 ## プロジェクト構成

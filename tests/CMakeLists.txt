@@ -3,7 +3,7 @@ add_executable(kiln_tests
 )
 
 target_link_libraries(kiln_tests PRIVATE
-        baker_core
+        kiln_core
 )
 
 add_test(NAME KilnCoreTest COMMAND kiln_tests)
