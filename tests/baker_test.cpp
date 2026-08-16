@@ -7,7 +7,6 @@
 #include <fstream>
 #include <vector>
 
-// 自動生成された設計図を読み込む
 #include "mesh_generated.h"
 
 int main() {
@@ -37,7 +36,6 @@ int main() {
         for (uint32_t i = 0; i < vertices->size(); ++i) {
             auto v = vertices->Get(i);
 
-            // 実際の設計図に合わせて px(), py(), pz() を呼び出す
             std::cout << "    頂点 " << i << ": ("
                       << v->px() << ", "
                       << v->py() << ", "
