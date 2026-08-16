@@ -11,4 +11,5 @@ target_include_directories(kiln_main PRIVATE
 
 target_link_libraries(kiln_main PRIVATE
         kiln_core
+        kiln_schema
 )

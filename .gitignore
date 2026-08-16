@@ -15,3 +15,11 @@
 
 # os
 .DS_Store
+
+# Kiln Baker / Generated Assets
+*.bin
+test_output.bin
+
+# Python Local Dependencies & Caches
+tool/libs/
+tool/__pycache__/

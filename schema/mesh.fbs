@@ -11,4 +11,5 @@ table Mesh {
   indices: [uint32];
 }
 
+
 root_type Mesh;
