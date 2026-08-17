@@ -6,6 +6,7 @@
 #pragma once
 #include <vector>
 #include <span>
+#include <cstdint>
 
 namespace kiln::mesh {
 

@@ -36,8 +36,8 @@ jobs:
         run: |
           choco install ninja
           curl -L -o flatc.zip "https://github.com/google/flatbuffers/releases/download/v25.12.19/Windows.flatc.binary.zip"
-          unzip flatc.zip -d flatc_bin
-          echo "$PWD/flatc_bin" >> $GITHUB_PATH
+          unzip -j flatc.zip flatc.exe -d $RUNNER_TEMP/flatc_bin
+          echo "$RUNNER_TEMP/flatc_bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         shell: bash

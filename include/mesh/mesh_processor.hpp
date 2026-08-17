@@ -7,6 +7,7 @@
 #include "mesh_types.hpp"
 
 #include <expected>
+#include <string>
 
 namespace kiln::mesh {
 
