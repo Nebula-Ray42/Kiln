@@ -12,7 +12,12 @@
 int main() {
     std::cout << "=== [Kiln] ゼロコピー読み込みテスト開始 ===" << std::endl;
 
-    std::ifstream infile("../../test_output.bin", std::ios::binary);
+    std::ifstream infile("data/test_output.bin", std::ios::binary);
+
+    if (!infile) {
+        infile.open("../../data/test_output.bin", std::ios::binary);
+    }
+
     if (!infile) {
         std::cerr << "エラー: test_output.bin が見つかりません。" << std::endl;
         return 1;
