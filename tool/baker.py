@@ -7,7 +7,7 @@ project_root = os.path.dirname(current_dir)
 
 sys.path.append(os.path.join(current_dir, 'libs'))
 
-generated_dir = os.path.join(project_root, 'cmake-build-debug', 'schema', 'generated')
+generated_dir = os.path.join(project_root, 'schema', 'generated')
 sys.path.append(generated_dir)
 
 import flatbuffers

@@ -7,23 +7,51 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-macos:
-    name: Build on macOS
-    runs-on: macos-latest
+  build-and-test:
+    name: Build & Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Build Tools
-        run: brew install ninja
+      # --- 依存ツールのインストール ---
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ninja flatbuffers
 
-      - name: Setup vcpkg
-        run: |
-          git clone https://github.com/microsoft/vcpkg.git ~/vcpkg
-          ~/vcpkg/bootstrap-vcpkg.sh
+      - name: Install Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build flatbuffers-compiler
 
-      - name: Run Build Script
+      - name: Install Dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ninja flatc
+
+      # --- ビルドの実行 ---
+      - name: Configure CMake
+        shell: bash
+        env:
+          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
+        run: cmake --preset kiln
+
+      - name: Build Project
+        shell: bash
+        env:
+          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
+        run: cmake --build cmake-build-debug
+
+      # --- バイナリ・シリアライズ（ゼロコピー）の検証 ---
+      - name: Run Binary Serialization Test
+        shell: bash
         run: |
-          chmod +x ./tool/build.sh
-          ./tool/build.sh
+          echo "=== 読み込み検証を開始します ==="
+          if [ "$RUNNER_OS" == "Windows" ]; then
+             ./cmake-build-debug/bin/kiln_tests.exe
+          else
+             ./cmake-build-debug/bin/kiln_tests
+          fi
