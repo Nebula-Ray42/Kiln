@@ -20,4 +20,4 @@ add_library(kiln_schema INTERFACE)
 target_include_directories(kiln_schema INTERFACE "${GENERATED_DIR}")
 target_link_libraries(kiln_schema INTERFACE flatbuffers::flatbuffers)
 
-target_sources(kiln_schema INTERFACE "${GENERATED_DIR}/mesh_generated.h")
+target_sources(kiln_schema INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/generated/mesh_generated.h")
