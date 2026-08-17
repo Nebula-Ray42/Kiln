@@ -21,7 +21,7 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
     nlohmann::json gltf_json;
     try {
         gltf_json = nlohmann::json::parse(file);
-    } catch (const nlohmann::json::parse_error& e) {
+    } catch (const nlohmann::json::parse_error&) {
         return std::unexpected("エラー: JSONの形式が不正です");
     }
 

@@ -27,7 +27,13 @@ jobs:
       # --- Linux ---
       - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y ninja-build flatbuffers-compiler
+        shell: bash
+        run: |
+          sudo apt-get update && sudo apt-get install -y ninja-build
+          curl -L -o flatc.zip "https://github.com/google/flatbuffers/releases/download/v25.12.19/Linux.flatc.binary.zip"
+          unzip -j flatc.zip flatc -d $RUNNER_TEMP/flatc_bin
+          chmod +x $RUNNER_TEMP/flatc_bin/flatc
+          echo "$RUNNER_TEMP/flatc_bin" >> $GITHUB_PATH
 
       # --- Windows ---
       - name: Install Dependencies (Windows)
@@ -39,7 +45,6 @@ jobs:
           unzip -j flatc.zip flatc.exe -d $RUNNER_TEMP/flatc_bin
           echo "$RUNNER_TEMP/flatc_bin" >> $GITHUB_PATH
 
-      # Windows
       - name: Setup MSVC (Windows)
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
