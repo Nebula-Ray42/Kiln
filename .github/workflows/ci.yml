@@ -19,37 +19,42 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # --- 依存ツールのインストール ---
+      # --- Mac ---
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
         run: brew install ninja flatbuffers
 
+      # --- Linux ---
       - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y ninja-build flatbuffers-compiler
 
+      # --- Windows ---
       - name: Install Dependencies (Windows)
         if: runner.os == 'Windows'
-        run: choco install ninja flatc
+        shell: bash
+        run: |
+          choco install ninja
+          curl -L -o flatc.zip "https://github.com/google/flatbuffers/releases/download/v25.12.19/Windows.flatc.binary.zip"
+          unzip flatc.zip -d flatc_bin
+          echo "$PWD/flatc_bin" >> $GITHUB_PATH
 
-      # --- ビルドの実行 ---
       - name: Configure CMake
         shell: bash
-        env:
-          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
-        run: cmake --preset kiln
+        run: |
+          export VCPKG_ROOT="$VCPKG_INSTALLATION_ROOT"
+          cmake --preset kiln
 
       - name: Build Project
         shell: bash
-        env:
-          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
-        run: cmake --build cmake-build-debug
+        run: |
+          export VCPKG_ROOT="$VCPKG_INSTALLATION_ROOT"
+          cmake --build cmake-build-debug
 
-      # --- バイナリ・シリアライズ（ゼロコピー）の検証 ---
       - name: Run Binary Serialization Test
         shell: bash
         run: |
-          echo "=== 読み込み検証を開始します ==="
+          echo "=== ゼロコピー読み込み検証を開始します ==="
           if [ "$RUNNER_OS" == "Windows" ]; then
              ./cmake-build-debug/bin/kiln_tests.exe
           else
