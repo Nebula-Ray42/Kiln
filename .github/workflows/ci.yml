@@ -39,11 +39,20 @@ jobs:
           unzip -j flatc.zip flatc.exe -d $RUNNER_TEMP/flatc_bin
           echo "$RUNNER_TEMP/flatc_bin" >> $GITHUB_PATH
 
+      # Windows
+      - name: Setup MSVC (Windows)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Configure CMake
         shell: bash
         run: |
           export VCPKG_ROOT="$VCPKG_INSTALLATION_ROOT"
-          cmake --preset kiln
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            cmake --preset kiln -DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl
+          else
+            cmake --preset kiln
+          fi
 
       - name: Build Project
         shell: bash
@@ -54,7 +63,7 @@ jobs:
       - name: Run Binary Serialization Test
         shell: bash
         run: |
-          echo "=== ゼロコピー読み込み検証を開始します ==="
+          echo "読み込み検証を開始します"
           if [ "$RUNNER_OS" == "Windows" ]; then
              ./cmake-build-debug/bin/kiln_tests.exe
           else
