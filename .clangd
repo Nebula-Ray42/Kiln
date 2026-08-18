@@ -1,3 +1,5 @@
+# Clangd Configuration
+
 Diagnostics:
   Suppress:
     - missing-field-initializers
