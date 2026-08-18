@@ -1,7 +1,5 @@
 # Kiln
 
-English | [日本語](README.jp.md)
-
 > A modern, data-oriented 3D asset processing engine built with C++23.
 
 ---
