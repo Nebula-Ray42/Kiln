@@ -13,7 +13,7 @@
 /gltf/library.wasm
 /bin/
 
-# os
+# OS
 .DS_Store
 
 # Kiln Baker / Generated Assets
