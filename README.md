@@ -1,5 +1,9 @@
 # Kiln
 
+[![build](https://github.com/Nebula-Ray42/Kiln/actions/workflows/ci.yml/badge.svg)](https://github.com/Nebula-Ray42/Kiln/actions)
+[![license](https://img.shields.io/badge/license-BSD2--Patent-blue)](LICENSE)
+[![vcpkg](https://img.shields.io/badge/deps-vcpkg-lightgrey)](#)
+
 > A modern, data-oriented 3D asset processing engine built with C++23.
 
 ---
