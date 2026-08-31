@@ -14,7 +14,7 @@
 namespace kiln::format {
 
 std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath) noexcept {
-    // 1. JSONの読み込み
+    
     std::ifstream file{std::string(filepath), std::ios::in | std::ios::binary};
     if (not file.is_open()) return std::unexpected("エラー: ファイルを開けませんでした");
 
@@ -25,7 +25,6 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         return std::unexpected("エラー: JSONの形式が不正です");
     }
 
-    // 2. メタデータの抽出 (POSITION)
     constexpr uint32_t GLTF_FLOAT = 5126;
     auto pos_meta_res = detail::extract_attribute_metadata(gltf_json, "POSITION", GLTF_FLOAT, "VEC3");
     if (not pos_meta_res.has_value()) return std::unexpected(pos_meta_res.error());
@@ -73,7 +72,6 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         index_offset = index_meta.byte_offset;
         index_type = index_meta.component_type;
 
-        // 型に合わせて要素数を計算
         size_t type_size = 2; // デフォルトは 5123 (uint16_t)
         if (index_type == 5121) type_size = 1;
         else if (index_type == 5125) type_size = 4;
@@ -81,7 +79,6 @@ std::expected<mesh::MeshData, std::string> parse_gltf(std::string_view filepath)
         index_count = index_meta.byte_length / type_size;
     }
 
-    // 3. バイナリのロード
     std::filesystem::path gltf_dir = std::filesystem::path(filepath).parent_path();
     std::filesystem::path bin_path = gltf_dir / pos_meta.uri;
 
