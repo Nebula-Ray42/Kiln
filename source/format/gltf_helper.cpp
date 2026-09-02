@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //
 //------------------------------------------------//
 
-#include "format/gltf_helper.hpp"
+#include "format/gltf_helper.h"
+
 #include <nlohmann/json.hpp>
 
 namespace kiln::format::detail {

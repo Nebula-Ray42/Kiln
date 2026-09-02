@@ -4,10 +4,10 @@
 //------------------------------------------------//
 
 #pragma once
-#include "mesh_types.hpp"
-
 #include <expected>
 #include <string>
+
+#include "mesh_types.h"
 
 namespace kiln::mesh {
 

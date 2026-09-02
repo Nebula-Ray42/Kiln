@@ -3,13 +3,15 @@
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //
 //------------------------------------------------//
 
-#include "format/gltf_parser.hpp"
-#include "format/gltf_helper.hpp"
-#include "core/file_io.hpp"
+#include "format/gltf_parser.h"
 
 #include <nlohmann/json.hpp>
+
 #include <fstream>
 #include <iostream>
+
+#include "core/file_io.h"
+#include "format/gltf_helper.h"
 
 namespace kiln::format {
 

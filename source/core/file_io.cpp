@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //
 //------------------------------------------------//
 
+#include "core/file_io.h"
 
-#include "core/file_io.hpp"
 #include <fstream>
 
 namespace kiln::core {

@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: BSD-2-Clause-Patent   //
 //------------------------------------------------//
 
-#include "mesh/mesh_processor.hpp"
+#include "mesh/mesh_processor.h"
+
 #include <algorithm>
 #include <expected>
 #include <string>

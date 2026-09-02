@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-#include "format/gltf_parser.hpp"
+#include "format/gltf_parser.h"
 
 int main() {
     auto result = kiln::format::parse_gltf("/Users/sakakibarayuto/Kiln/tests/assets/Box.gltf");
