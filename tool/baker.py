@@ -19,7 +19,7 @@ def bake_mesh(output_filepath):
 
     for obj in bpy.context.scene.objects:
         if obj.type == 'MESH':
-            print(f"[*] メッシュを発見: {obj.name}")
+            print(f"[*] メッシュを確認: {obj.name}")
             mesh = obj.data
 
             builder = flatbuffers.Builder(1024)
