@@ -32,19 +32,19 @@ int main() {
     infile.read(reinterpret_cast<char*>(buffer.data()), static_cast<std::streamsize>(length));
     infile.close();
 
-    auto mesh = kiln::schema::GetMesh(buffer.data());
-    auto vertices = mesh->vertices();
+    auto mesh = kiln::schema::GetMeshData(buffer.data());
+    auto positions = mesh->positions();
 
-    if (vertices) {
-        std::cout << "[*] 読み込み成功！頂点数: " << vertices->size() << std::endl;
+    if (positions) {
+        std::cout << "[*] 読み込み成功！頂点数: " << positions->size() << std::endl;
 
-        for (uint32_t i = 0; i < vertices->size(); ++i) {
-            auto v = vertices->Get(i);
+        for (uint32_t i = 0; i < positions->size(); ++i) {
+            auto v = positions->Get(i);
 
             std::cout << "    頂点 " << i << ": ("
-                      << v->px() << ", "
-                      << v->py() << ", "
-                      << v->pz() << ")" << std::endl;
+                      << v->x() << ", "
+                      << v->y() << ", "
+                      << v->z() << ")" << std::endl;
         }
     } else {
         std::cout << "[!] 頂点データが空です。" << std::endl;
