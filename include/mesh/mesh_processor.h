@@ -15,4 +15,6 @@ namespace kiln::mesh {
 
 [[nodiscard]] std::expected<MeshData, std::string> optimize_mesh(MeshData mesh) noexcept;
 
+[[nodiscard]] std::expected<ProcessedMesh, std::string> process_mesh(const MeshData& raw_mesh) noexcept;
+
 }

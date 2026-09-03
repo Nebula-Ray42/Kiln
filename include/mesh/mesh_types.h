@@ -5,10 +5,29 @@
 
 #pragma once
 #include <vector>
+#include <variant>
 #include <span>
 #include <cstdint>
 
 namespace kiln::mesh {
+
+// Vantaエンジンに最適化された位置データ (リスト1)
+struct Position {
+    float x, y, z;
+};
+
+// Vantaエンジンに最適化された属性データ (リスト2)
+struct VertexAttribute {
+    float u, v;
+    float nx, ny, nz;
+};
+
+// ベイカーの処理結果 (出力データ)
+struct ProcessedMesh {
+    std::vector<Position> positions;
+    std::vector<VertexAttribute> attributes;
+    std::variant<std::vector<uint16_t>, std::vector<uint32_t>> indices;
+};
 
 struct MeshData {
 
